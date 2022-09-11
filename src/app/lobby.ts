@@ -1,0 +1,1 @@
+export interface Lobby { leader: string, members: Array<string>}

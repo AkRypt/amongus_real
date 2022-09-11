@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+    font-family: joffrey;
+    src: url(./assets/fonts/joffrey.ttf);
+}
+
+.container {
+	background-image: url('assets/images/amongus_bg.jpg');
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.text {
+    color: white;
+    font-size: 36px;
+    font-family: joffrey;
+    font-weight: 100;
+}

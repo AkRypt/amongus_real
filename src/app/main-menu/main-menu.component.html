@@ -1,0 +1,13 @@
+<div class="container">
+    <p class="logo"></p>
+    <button class="button" (click)="onCreate()"
+    type="button">CREATE</button>
+    <!-- routerLink="/lobby" -->
+    <button class="button" (click)="onJoin()"
+    style="margin-top: 20px"
+    type="button">JOIN</button>
+
+    <div *ngIf="joinClicked" class="modal">
+        <p class="text">Hello</p>
+    </div>
+</div>

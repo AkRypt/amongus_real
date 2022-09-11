@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="screen">
+        <p style="margin-top: 8px;"
+        class="text">Code: {{ code }}</p>
+
+        <mat-tab-group
+        class="text tabText">
+            <mat-tab class="tab" label="Members">
+                <div *ngFor="let member of members">
+                    <p>{{ member.name }}</p>
+                </div>
+            </mat-tab>
+            <mat-tab class="tab" label="Tasks">
+                <div *ngFor="let task of tasks">
+                    <p>{{ task.name }}</p>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+        
+    </div>
+</div>

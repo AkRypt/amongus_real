@@ -1,0 +1,29 @@
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	margin: -8px;
+}
+
+.screen {		
+	background: linear-gradient(90deg, black, #171717);	
+	position: relative;	
+	height: 600px;
+	width: 320px;	
+	box-shadow: 0px 0px 24px #5C5696;
+    padding: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.tabText {
+    font-size: 25px;
+    margin-top: -20px;
+}
+
+.tab {
+    margin-right:-10px;
+    margin-left: -10px;
+}
