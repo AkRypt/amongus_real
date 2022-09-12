@@ -28,7 +28,7 @@ export class MainMenuComponent implements OnInit {
       code: this.code, 
       tasks: tasks
     });
-    this.router.navigate(['/lobby'], {state: {data: this.code}});
+    this.router.navigate(['/lobby', this.code], {state: {data: this.code}});
   }
 
   onJoin() {

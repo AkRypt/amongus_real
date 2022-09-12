@@ -28,10 +28,10 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     RouterModule.forRoot([
-      { path: '', component: LoginComponent },
+      { path: '', component: MainMenuComponent },
       { path: '', component: LoginComponent },
       { path: 'main', component: MainMenuComponent },
-      { path: 'lobby', component: LobbyComponent },
+      { path: 'lobby/:code', component: LobbyComponent },
     ]),
     BrowserAnimationsModule,
     MatTabsModule,
