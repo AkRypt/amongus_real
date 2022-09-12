@@ -20,10 +20,11 @@
 
 .tabText {
     font-size: 25px;
-    margin-top: -20px;
 }
 
-.tab {
-    margin-right:-10px;
-    margin-left: -10px;
+.mat-tab-label {
+	color: white;
+	font-family: joffrey;
+	font-size: 26px;
+	font-weight: 100;
 }

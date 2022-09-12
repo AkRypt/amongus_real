@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { tasks } from '../lobby';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-menu',
@@ -13,6 +15,7 @@ export class MainMenuComponent implements OnInit {
 
   constructor(
     private db: AngularFirestore,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -21,7 +24,11 @@ export class MainMenuComponent implements OnInit {
   onCreate() {
     this.code = (Math.random() + 1).toString(36).substring(6);
     let lobbies = this.db.collection('lobbies');
-    lobbies.add({name: this.code});
+    lobbies.add({
+      code: this.code, 
+      tasks: tasks
+    });
+    this.router.navigate(['/lobby'], {state: {data: this.code}});
   }
 
   onJoin() {

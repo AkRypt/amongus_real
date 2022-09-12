@@ -12,6 +12,8 @@ import { MainMenuComponent } from './main-menu/main-menu.component';
 import { LobbyComponent } from './lobby/lobby.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,15 @@ import { MatTabsModule } from '@angular/material/tabs';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     RouterModule.forRoot([
-      { path: '', component: MainMenuComponent },
+      { path: '', component: LoginComponent },
       { path: '', component: LoginComponent },
       { path: 'main', component: MainMenuComponent },
       { path: 'lobby', component: LobbyComponent },
     ]),
     BrowserAnimationsModule,
     MatTabsModule,
+    MatIconModule,
+    CoolSocialLoginButtonsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
