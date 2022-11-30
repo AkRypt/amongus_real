@@ -16,7 +16,11 @@ export class MainMenuComponent implements OnInit {
   constructor(
     private db: AngularFirestore,
     private router: Router,
-  ) {}
+  ) {
+
+    let name = localStorage.getItem('name')
+    localStorage.setItem('code', '')
+  }
 
   ngOnInit(): void {
   }
@@ -24,15 +28,24 @@ export class MainMenuComponent implements OnInit {
   onCreate() {
     this.code = (Math.random() + 1).toString(36).substring(6);
     let lobbies = this.db.collection('lobbies');
-    lobbies.add({
+    lobbies.doc(this.code).set({
       code: this.code, 
-      tasks: tasks
+      tasks: tasks,
+      users: [],
     });
+    localStorage.setItem('code', this.code)
     this.router.navigate(['/lobby', this.code], {state: {data: this.code}});
   }
 
-  onJoin() {
+  onJoinBtn() {
     this.joinClicked = !this.joinClicked;
+  }
+
+  onKey(event) {this.code = event.target.value;}
+
+  onJoin() {
+    localStorage.setItem('code', this.code)
+    this.router.navigate(['/lobby', this.code], {state: {data: this.code}});
   }
   
 }

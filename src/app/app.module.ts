@@ -20,7 +20,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     AppComponent,
     LoginComponent,
     MainMenuComponent,
-    LobbyComponent
+    LobbyComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     RouterModule.forRoot([
-      { path: '', component: MainMenuComponent },
+      // { path: '', component: MainMenuComponent },
       { path: '', component: LoginComponent },
       { path: 'main', component: MainMenuComponent },
       { path: 'lobby/:code', component: LobbyComponent },

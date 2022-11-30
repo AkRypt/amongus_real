@@ -3,11 +3,18 @@
     <button class="button" (click)="onCreate()"
     type="button">CREATE</button>
     <!-- routerLink="/lobby" -->
-    <button class="button" (click)="onJoin()"
+    <button class="button" (click)="onJoinBtn()"
     style="margin-top: 20px"
     type="button">JOIN</button>
 
     <div *ngIf="joinClicked" class="modal">
-        <p class="text">Hello</p>
+        <p class="text">Enter code:</p>
+
+        <form (submit)="onJoin()">
+            <input class="inputField" (keyup)="onKey($event)">
+            <button class="button"
+                style="margin-top: 20px"
+                type="submit">JOIN</button>
+        </form>
     </div>
 </div>

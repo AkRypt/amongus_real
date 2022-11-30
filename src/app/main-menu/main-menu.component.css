@@ -29,9 +29,18 @@
     z-index: 5;
     width: 200px;
     height: 200px;
-    background-color: blue;
     justify-content: center;
     align-items: center;
     display: flex;
     position: fixed;
+    background: linear-gradient(90deg, black, #171717);	
+	box-shadow: 0px 0px 24px #5C5696;
+    padding: 10px;
+    flex-direction: column;
+}
+
+.textField {
+	box-shadow: 0px 0px 24px #5C5696;
+    padding: 10px;
+    align-self: center;
 }
