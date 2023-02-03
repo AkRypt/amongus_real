@@ -1,0 +1,4 @@
+- Don't join if code not available
+- Remove user when they go back
+- Add/Edit tasks
+- Checklisting funcitonality

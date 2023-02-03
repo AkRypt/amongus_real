@@ -28,3 +28,29 @@
 	font-size: 26px;
 	font-weight: 100;
 }
+
+.tab {
+	
+}
+
+.task {
+	margin-top: 16px;
+	flex-direction: row;
+	display: flex;
+	justify-content: space-between;
+}
+
+.iconDiv {
+	
+}
+
+.icons {
+	font-size: 16px;
+	margin-left: 6px;
+	cursor: pointer;
+}
+
+.plus {
+	font-size: 28px;
+	margin-top: 10px;
+}

@@ -7,15 +7,15 @@ export interface Lobby {
 
 export const tasks = [
     {
-        id: 1,
+        tid: 0,
         task: "Do 10 pushups"
     },
     {
-        id: 2,
+        tid: 1,
         task: "Talk to your friend"
     },
     {
-        id: 3,
+        tid: 2,
         task: "Know your friend's name"
     },
 ]

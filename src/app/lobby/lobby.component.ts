@@ -1,10 +1,10 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Host, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Lobby } from '../lobby';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import firebase from 'firebase/compat/app'
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, deleteDoc, getFirestore } from 'firebase/firestore';
 
 @Component({
   selector: 'app-lobby',
@@ -21,6 +21,7 @@ export class LobbyComponent implements OnInit {
   code;
   members = Array();
   users;
+  taskList;
   tasks;
   currMember;
 
@@ -35,67 +36,84 @@ export class LobbyComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   async getItems() {
-
     await this.lobby.valueChanges().subscribe(item => {
       this.users = {}
       this.members = []
+      this.taskList = {}
       this.tasks = []
-      console.log("1", item)
       Object.entries(item['users']).forEach(([key, value], index) => {
         this.users[key] = value
+        this.members.push(value)
       });
-      // for (let i = 0; i < item['users'].length; i++) {
-      //   this.members.push(item['users'][i])
-      // }
-      for (let i = 0; i < item['tasks'].length; i++) {
-        this.tasks.push(item['tasks'][i])
-      }
+      Object.entries(item['tasks']).forEach(([key, value], index) => {
+        this.taskList[key] = value
+        this.tasks.push(value)
+      });
+      // this.updateUser()
+    })
+
+    this.currMember = { 
+      uid: localStorage.getItem('uid'),
+      name: localStorage.getItem('name')
+    }
+    this.members.push(this.currMember)
+
+    setTimeout(() => {
       this.updateUser()
+    }, 2000);
+  }
+
+  updateUser() {
+    Object.entries(this.users).forEach(([key, value], index) => {
+      if (key == this.currMember.uid) return
+    });
+    this.users[this.currMember.uid] = this.currMember
+    this.lobby.update({
+      users: this.users
     })
   }
 
-  async updateUser() {
-    try {
-      this.currMember = { 
-        uid: localStorage.getItem('uid'),
-        name: localStorage.getItem('name')
-      }
+  /// Tasks Control Methods
+  onClickEdit(task) {
+    console.log(task)
+    console.log(this.taskList)
+    
+  }
 
-      Object.entries(this.users).forEach(([key, value], index) => {
-        if (key == this.currMember.uid) return
-        this.members.push(value)
-      });
-      this.members.push(this.currMember)
-      // for (let member of this.members) {
-      //   if (member.uid == this.currMember.uid) {
-      //     return
-      //   }
-      // }
+  onClickDelete(task) {
+    delete this.taskList[task.tid]
+    this.lobby.update({
+      tasks: this.taskList
+    })
+  }
 
-      this.users[this.currMember.uid] = this.currMember
-      console.log(this.users)
-      // await setDoc(doc(this.db, "lobbies", this.code "users", this.currMember.uid), this.currMember)
-      // this.db.collection('lobbies').doc(this.code+"/users/"+this.currMember.uid).set(this.currMember)
-      this.lobby.update({
-        users: this.users
-      })
-      // this.lobby.update({
-      //   users: firebase.firestore.FieldValue.arrayUnion(this.currMember)
-      // })
-    } catch (e) {
-      console.log("In updateUser, e: ", e)
+  onClickNewTask() {
+    let tempTask = {}
+  }
+  /// -------------------
+
+  // To remove current user from the lobby
+  @HostListener('window:popstate', ['$event'])
+  onPopState(event) {
+    delete this.users[this.currMember.uid]
+    console.log(this.users)
+    this.lobby.update({
+      users: this.users
+    })
+
+    // Deleting lobby if lobby is empty
+    if (Object.keys(this.users).length == 0) {
+      ///// UNCOMMENT LATER ////
+      // deleteDoc(doc(getFirestore(), "lobbies", this.code))
     }
   }
 
-  @HostListener('window:beforeunload')
-  onPageClose() {
-    this.lobby.update({
-      // users: firebase.firestore.FieldValue.arrayRemove(this.currMember.uid)
-    })
-  }
-
 }
+
+
+// this.lobby.update({
+//   users: firebase.firestore.FieldValue.arrayUnion(this.currMember)
+// })
