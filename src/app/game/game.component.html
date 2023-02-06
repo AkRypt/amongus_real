@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="screen">
+        <p style="margin-top: 8px;"
+        class="text">Code: {{ code }}</p>
+
+        <div *ngIf="impRevealed">
+            <p *ngIf="isImposter"
+            class="text imposter">IMPOSTER</p>
+            <p *ngIf="!isImposter"
+            class="text crewmate">CREWMATE<p>
+        </div>
+
+        <mat-tab-group
+        class="text tabText">
+            <mat-tab class="tab" label="Members">
+                <div style="margin-top: 16px;"
+                *ngFor="let member of members">
+                    <p>{{ member['name'] }}</p>
+                </div>
+            </mat-tab>
+            <mat-tab class="tab" label="Tasks">
+                <div class="task"
+                *ngFor="let task of tasks">
+                    <p>{{ task.task }}</p>
+                    <div class="iconDiv">
+                        
+                    </div>
+                </div>
+                
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

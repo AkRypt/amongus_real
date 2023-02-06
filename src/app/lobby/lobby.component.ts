@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
 import firebase from 'firebase/compat/app'
 import { doc, setDoc, deleteDoc, getFirestore } from 'firebase/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby',
@@ -24,10 +25,15 @@ export class LobbyComponent implements OnInit {
   taskList;
   tasks;
   currMember;
+  editClicked!: boolean;
+  editedTask;
+  currentTid;
+  isNewTask!: boolean;
 
   constructor(
     private db: AngularFirestore,
     private authService: AuthService,
+    private router: Router,
   ) {
 
     this.code = localStorage.getItem('code')
@@ -78,9 +84,29 @@ export class LobbyComponent implements OnInit {
 
   /// Tasks Control Methods
   onClickEdit(task) {
-    console.log(task)
-    console.log(this.taskList)
-    
+    this.editClicked = !this.editClicked;
+    this.currentTid = task.tid
+    this.isNewTask = false;
+  }
+  onKey(event) {this.editedTask = event.target.value;}
+  
+  onClickNewTask() {
+    this.editClicked = !this.editClicked;
+    this.isNewTask = true;
+  }
+
+  onEditSubmit(e) {
+    e.preventDefault()
+    this.editClicked = !this.editClicked;
+    if (this.isNewTask) {
+      let tempTid = (Math.random() + 1).toString(36).substring(6);
+      this.taskList[tempTid] = {tid: tempTid, task: this.editedTask}
+    } else {
+      this.taskList[this.currentTid]["task"] = this.editedTask;
+    }
+    this.lobby.update({
+      tasks: this.taskList
+    })
   }
 
   onClickDelete(task) {
@@ -88,10 +114,6 @@ export class LobbyComponent implements OnInit {
     this.lobby.update({
       tasks: this.taskList
     })
-  }
-
-  onClickNewTask() {
-    let tempTask = {}
   }
   /// -------------------
 
@@ -106,9 +128,13 @@ export class LobbyComponent implements OnInit {
 
     // Deleting lobby if lobby is empty
     if (Object.keys(this.users).length == 0) {
-      ///// UNCOMMENT LATER ////
-      // deleteDoc(doc(getFirestore(), "lobbies", this.code))
+      deleteDoc(doc(getFirestore(), "lobbies", this.code))
     }
+  }
+
+  // Starting the game
+  onStart() {
+    this.router.navigate(['/game', this.code], {state: {data: this.code}});
   }
 
 }

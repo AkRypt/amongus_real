@@ -5,8 +5,6 @@
 
         <mat-tab-group
         class="text tabText">
-        
-            
             <mat-tab class="tab" label="Members">
                 <div style="margin-top: 16px;"
                 *ngFor="let member of members">
@@ -26,7 +24,21 @@
                 </div>
                 <span class="material-icons icons plus"
                 (click)="onClickNewTask()">add</span>
+    
+                <div *ngIf="editClicked" class="modal">
+                    <p class="text">Enter task:</p>
+            
+                    <form (submit)="onEditSubmit($event)">
+                        <input class="inputField" (keyup)="onKey($event)">
+                        <button class="button"
+                            style="margin-top: 20px"
+                            type="submit">Submit</button>
+                    </form>
+                </div>
             </mat-tab>
         </mat-tab-group>
+
+        <button (click)="onStart()" class="button"
+        >START</button>
     </div>
 </div>

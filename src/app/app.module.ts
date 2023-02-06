@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     LoginComponent,
     MainMenuComponent,
     LobbyComponent,
+    GameComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,10 +30,10 @@ import { CoolSocialLoginButtonsModule } from '@angular-cool/social-login-buttons
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     RouterModule.forRoot([
-      // { path: '', component: MainMenuComponent },
       { path: '', component: LoginComponent },
       { path: 'main', component: MainMenuComponent },
       { path: 'lobby/:code', component: LobbyComponent },
+      { path: 'game/:code', component: GameComponent },
     ]),
     BrowserAnimationsModule,
     MatTabsModule,

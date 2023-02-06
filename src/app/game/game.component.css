@@ -85,3 +85,15 @@
     padding: 10px;
     align-self: center;
 }
+
+.imposter {
+    font-size: 26px;
+    margin-top: 5px;
+    color: red;
+}
+
+.crewmate {
+    font-size: 26px;
+    margin-top: 5px;
+    color: cyan;
+}
