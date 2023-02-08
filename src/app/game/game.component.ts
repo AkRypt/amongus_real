@@ -56,13 +56,18 @@ export class GameComponent implements OnInit {
 
     this.currMember = { 
       uid: localStorage.getItem('uid'),
-      name: localStorage.getItem('name')
+      name: localStorage.getItem('name'),
+      isAdmin: localStorage.getItem('isAdmin'),
+      isImposter: false
     }
     this.members.push(this.currMember)
 
     // Selecting imposters
     setTimeout(() => {
-      
+      if (this.users[this.currMember.uid]["isImposter"]) {
+        this.isImposter = true
+      }
+      this.impRevealed = true
     }, 2000);
   }
 }

@@ -15,14 +15,14 @@
                 <div class="task"
                 *ngFor="let task of tasks">
                     <p>{{ task.task }}</p>
-                    <div class="iconDiv">
+                    <div *ngIf="isAdmin" class="iconDiv">
                         <span class="material-icons icons"
                         (click)="onClickEdit(task)">edit</span>
                         <span class="material-icons icons"
                         (click)="onClickDelete(task)">delete</span>
                     </div>
                 </div>
-                <span class="material-icons icons plus"
+                <span *ngIf="isAdmin" class="material-icons icons plus"
                 (click)="onClickNewTask()">add</span>
     
                 <div *ngIf="editClicked" class="modal">
@@ -38,7 +38,7 @@
             </mat-tab>
         </mat-tab-group>
 
-        <button (click)="onStart()" class="button"
+        <button *ngIf="isAdmin" (click)="onStart()" class="button"
         >START</button>
     </div>
 </div>

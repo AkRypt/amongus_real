@@ -20,6 +20,7 @@ export class LobbyComponent implements OnInit {
   lobby;
   lobbyRefTemp;
   code;
+  isAdmin!: boolean;
   members = Array();
   users;
   taskList;
@@ -37,6 +38,7 @@ export class LobbyComponent implements OnInit {
   ) {
 
     this.code = localStorage.getItem('code')
+    this.isAdmin = localStorage.getItem('isAdmin') == "true"
     this.lobby = db.collection('lobbies').doc(this.code)
     this.getItems()
 
@@ -58,12 +60,17 @@ export class LobbyComponent implements OnInit {
         this.taskList[key] = value
         this.tasks.push(value)
       });
+      if (item["inGame"]) {
+        this.router.navigate(['/game', this.code], {state: {data: this.code}});
+      }
       // this.updateUser()
     })
 
     this.currMember = { 
       uid: localStorage.getItem('uid'),
-      name: localStorage.getItem('name')
+      name: localStorage.getItem('name'),
+      isAdmin: localStorage.getItem('isAdmin'),
+      isImposter: false
     }
     this.members.push(this.currMember)
 
@@ -121,7 +128,6 @@ export class LobbyComponent implements OnInit {
   @HostListener('window:popstate', ['$event'])
   onPopState(event) {
     delete this.users[this.currMember.uid]
-    console.log(this.users)
     this.lobby.update({
       users: this.users
     })
@@ -134,6 +140,26 @@ export class LobbyComponent implements OnInit {
 
   // Starting the game
   onStart() {
+    // Selecting the imposter
+    let imposters : string[] = []
+    const keys = Object.keys(this.users);
+    let numPlayers = Math.ceil(Object.keys(this.users).length / 3)
+    for (let i = 0; i < numPlayers; i++) {
+      let imposter = keys[Math.floor(Math.random() * keys.length)]
+      while (imposters.includes(imposter)) {
+        imposter = keys[Math.floor(Math.random() * keys.length)]
+      }
+      imposters.push(imposter)
+    }
+    for (let imposter of imposters) {
+      this.users[imposter]["isImposter"] = true
+    }
+    this.lobby.update({
+      users: this.users,
+      inGame: true
+    })
+    
+    // Going to next screen
     this.router.navigate(['/game', this.code], {state: {data: this.code}});
   }
 

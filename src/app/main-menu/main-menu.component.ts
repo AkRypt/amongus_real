@@ -32,8 +32,12 @@ export class MainMenuComponent implements OnInit {
       code: this.code, 
       tasks: tasks,
       users: [],
+      inGame: false,
+      tasksFinished: false,
+      crewmatesDead: false,
     });
     localStorage.setItem('code', this.code)
+    localStorage.setItem('isAdmin', "true")
     this.router.navigate(['/lobby', this.code], {state: {data: this.code}});
   }
 
@@ -45,6 +49,7 @@ export class MainMenuComponent implements OnInit {
 
   onJoin() {
     localStorage.setItem('code', this.code)
+    localStorage.setItem('isAdmin', "false")
     this.router.navigate(['/lobby', this.code], {state: {data: this.code}});
   }
   
