@@ -5,7 +5,7 @@
 }
 
 .container {
-	background-image: url('assets/images/amongus_bg.jpg');
+	background-image: url('./assets/images/amongus_bg.jpg');
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
