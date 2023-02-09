@@ -22,8 +22,10 @@ export class GameComponent implements OnInit {
   editClicked!: boolean;
   editedTask;
   currentTid;
-  isImposter!: boolean;
-  impRevealed!: boolean;
+  isImposter!: boolean; // Change later to boolean
+  impRevealed!: boolean; // Change later to boolean
+  crewmatesDead!: boolean;
+  tasksFinished!: boolean;
 
   constructor(
     private db: AngularFirestore,
@@ -44,6 +46,9 @@ export class GameComponent implements OnInit {
       this.members = []
       this.taskList = {}
       this.tasks = []
+      console.log("item", item)
+      this.crewmatesDead = item['crewmatesDead'];
+      this.tasksFinished = item['tasksFinished'];
       Object.entries(item['users']).forEach(([key, value], index) => {
         this.users[key] = value
         this.members.push(value)
@@ -52,6 +57,9 @@ export class GameComponent implements OnInit {
         this.taskList[key] = value
         this.tasks.push(value)
       });
+
+      // Checking if someone won
+      this.endGame()
     })
 
     this.currMember = { 
@@ -68,6 +76,67 @@ export class GameComponent implements OnInit {
         this.isImposter = true
       }
       this.impRevealed = true
-    }, 2000);
+    }, 3000);
+  }
+
+  onCheckTask(task) {
+    console.log(this.tasks)
+    this.tasks[task.tid]["isDone"] = true
+    console.log(this.tasks)
+    for (let task in this.tasks) {
+      if (this.tasks[task]["isDone"] == false) return;
+    }
+    this.users[this.currMember.uid]["tasksDone"] = true
+    this.lobby.update({
+      users: this.users,
+    })
+    this.checkTasks()
+  }
+
+  onKillMember(member) {
+    member["isDead"] = true
+    this.users[member.uid]["isDead"] = true
+    this.lobby.update({
+      users: this.users,
+    })
+    this.checkDead()
+  }
+
+  checkDead() {
+    if (Object.keys(this.users).length == 0) return;
+    for (let user in this.users) {
+      if (this.users[user]["isDead"] == false) {
+        return;
+      }
+    }
+    this.lobby.update({
+      crewmatesDead: true,
+      inGame: false,
+    })
+    // this.crewmatesDead = true
+    // this.endGame()
+  }
+
+  checkTasks() {
+    if (Object.keys(this.users).length == 0) return;
+    for (let user in this.users) {
+      if (this.users[user]["tasksDone"] == false) {
+        return;
+      }
+    }
+    this.lobby.update({
+      tasksFinished: true,
+      inGame: false,
+    })
+    // this.tasksFinished = true
+    // this.endGame()
+  }
+
+  endGame() {
+    if (this.tasksFinished) {
+      alert("Crewmates Won")
+    } else if (this.crewmatesDead) {
+      alert("Imposter won")
+    }
   }
 }

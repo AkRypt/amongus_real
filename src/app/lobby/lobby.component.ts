@@ -63,20 +63,21 @@ export class LobbyComponent implements OnInit {
       if (item["inGame"]) {
         this.router.navigate(['/game', this.code], {state: {data: this.code}});
       }
-      // this.updateUser()
     })
 
     this.currMember = { 
       uid: localStorage.getItem('uid'),
       name: localStorage.getItem('name'),
       isAdmin: localStorage.getItem('isAdmin'),
-      isImposter: false
+      isImposter: false,
+      tasksDone: false,
+      isDead: false,
     }
     this.members.push(this.currMember)
 
     setTimeout(() => {
       this.updateUser()
-    }, 2000);
+    }, 3000);
   }
 
   updateUser() {
@@ -85,11 +86,11 @@ export class LobbyComponent implements OnInit {
     });
     this.users[this.currMember.uid] = this.currMember
     this.lobby.update({
-      users: this.users
+      users: this.users,
     })
   }
 
-  /// Tasks Control Methods
+  /// Tasks Control Methods ------
   onClickEdit(task) {
     this.editClicked = !this.editClicked;
     this.currentTid = task.tid
@@ -152,7 +153,9 @@ export class LobbyComponent implements OnInit {
       imposters.push(imposter)
     }
     for (let imposter of imposters) {
-      this.users[imposter]["isImposter"] = true
+      this.users[imposter]["isImposter"] = true;
+      this.users[imposter]["tasksDone"] = true;
+      this.users[imposter]["isDead"] = true;
     }
     this.lobby.update({
       users: this.users,
@@ -164,8 +167,3 @@ export class LobbyComponent implements OnInit {
   }
 
 }
-
-
-// this.lobby.update({
-//   users: firebase.firestore.FieldValue.arrayUnion(this.currMember)
-// })

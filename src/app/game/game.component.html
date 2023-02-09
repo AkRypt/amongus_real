@@ -13,20 +13,28 @@
         <mat-tab-group
         class="text tabText">
             <mat-tab class="tab" label="Members">
-                <div style="margin-top: 16px;"
+                <div style="margin-top: 16px;" class="task"
                 *ngFor="let member of members">
                     <p>{{ member['name'] }}</p>
+                    <p *ngIf="member.isDead && !member.isImposter"
+                    style="color: red">Dead</p>
+                    <div *ngIf="isImposter" class="iconDiv">
+                        <span *ngIf="!member.isDead" class="material-icons icons"
+                        (click)="onKillMember(member)">clear</span>
+                    </div>
                 </div>
             </mat-tab>
             <mat-tab class="tab" label="Tasks">
                 <div class="task"
                 *ngFor="let task of tasks">
                     <p>{{ task.task }}</p>
-                    <div class="iconDiv">
-                        
+                    <div *ngIf="!isImposter" class="iconDiv">
+                        <p *ngIf="task.isDone"
+                        style="color: green">Done</p>
+                        <span *ngIf="!task.isDone" class="material-icons icons"
+                        (click)="onCheckTask(task)">check</span>
                     </div>
                 </div>
-                
             </mat-tab>
         </mat-tab-group>
     </div>
