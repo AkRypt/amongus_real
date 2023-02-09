@@ -37,5 +37,8 @@
                 </div>
             </mat-tab>
         </mat-tab-group>
+
+        <button *ngIf="emergencyReady" (click)="onEmergency()" 
+        class="button">EMERGENCY</button>
     </div>
 </div>

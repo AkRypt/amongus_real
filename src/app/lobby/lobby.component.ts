@@ -108,7 +108,11 @@ export class LobbyComponent implements OnInit {
     this.editClicked = !this.editClicked;
     if (this.isNewTask) {
       let tempTid = (Math.random() + 1).toString(36).substring(6);
-      this.taskList[tempTid] = {tid: tempTid, task: this.editedTask}
+      this.taskList[tempTid] = {
+        tid: tempTid, 
+        task: this.editedTask,
+        isDone: false,
+      }
     } else {
       this.taskList[this.currentTid]["task"] = this.editedTask;
     }
@@ -159,11 +163,16 @@ export class LobbyComponent implements OnInit {
     }
     this.lobby.update({
       users: this.users,
-      inGame: true
+      inGame: true,
+      crewmatesDead: false,
+      tasksFinished: false,
     })
     
     // Going to next screen
-    this.router.navigate(['/game', this.code], {state: {data: this.code}});
+    this.router.navigate(
+      ['/game', this.code], 
+      {state: {data: this.code}}
+    );
   }
 
 }
