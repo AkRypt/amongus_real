@@ -15,3 +15,5 @@ Have fun playing! =)
 
 ## Screenshots
 
+<img src="/screenshots/login.png" alt="Login Page" style="width: 300px"> <img src="/screenshots/main_screen.png" alt="Main Page" style="width: 300px">
+<img src="/screenshots/imposter_screen.png" alt="Imposter Page" style="width: 450px"> <img src="/screenshots/crewmate_screen.png" alt="Crewmate Page" style="width: 400px">
