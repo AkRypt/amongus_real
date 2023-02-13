@@ -1,5 +1,7 @@
 # Among Us Real
 
+## Click <a href="https://akrypt.github.io/amongus_real/" target="_blank">here</a> to play!
+
 This is a website which enables you to play the popular game Among Us in real life with a group of friends and in-real tasks which you can set to your liking.
 You and your friends can join a lobby and decide on tasks. You can then start the game and 30% of the players will be randomly selected as imposters.
 
